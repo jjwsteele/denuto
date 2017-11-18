@@ -1,0 +1,20 @@
+{
+  "name": "denuto",
+  "version": "0.1.0",
+  "description": "Design by contract for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Jordan Steele",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-jest": "^21.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^21.2.1",
+    "regenerator-runtime": "^0.11.0"
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0"
+  }
+}
