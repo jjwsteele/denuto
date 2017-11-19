@@ -1,4 +1,4 @@
-import contract from '../src'
+import { contract } from '../src'
 
 const numbers = [43, 53, 23, 76, 45, 87, 44]
 const tenNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -21,7 +21,7 @@ describe('contract', () => {
   })
 
   describe('with just a pre condition', () => {
-    let sortWithContract;
+    let sortWithContract
 
     beforeEach(() => {
       sortWithContract = contract(lengthLessThan10)(sort)
@@ -56,7 +56,7 @@ describe('contract', () => {
   })
 
   describe('with both pre and post conditions', () => {
-    let findIndexWithContract;
+    let findIndexWithContract
 
     beforeEach(() => {
       findIndexWithContract = contract(
