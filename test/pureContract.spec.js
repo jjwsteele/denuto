@@ -3,9 +3,9 @@ import { pureContract } from '../src'
 describe('pureContract', () => {
   describe('with a function that modifies its arguments', () => {
     it('throws postcondition error', () => {
-      const square = number => { number = number * number }
-      const squareWithContract = pureContract()(square)
-      expect(() => squareWithContract(5)).toThrow(/postcondition/)
+      const pushOne = array => { array.push(1) }
+      const pushOneWithContract = pureContract()(pushOne)
+      expect(() => pushOneWithContract([2])).toThrow(/postcondition/)
     })
   })
 
@@ -53,6 +53,13 @@ describe('pureContract', () => {
 
     it('throws an error when postcondition is not met', () => {
       expect(() => sumWithContract([5, 4, 3, 10, 1])).toThrow(/postcondition/)
+    })
+  })
+
+  describe('with a pure function and no postcondition', () => {
+    it('maintains behaviour', () => {
+      const add = (a, b) => a + b
+      expect(pureContract()(add)(1, 2)).toBe(3)
     })
   })
 })
