@@ -57,7 +57,7 @@ describe('pureContract', () => {
   })
 
   describe('with a pure function and no postcondition', () => {
-    it('maintains behaviour', () => {
+    it('maintains behaviour of function', () => {
       const add = (a, b) => a + b
       expect(pureContract()(add)(1, 2)).toBe(3)
     })
