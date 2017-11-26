@@ -1,4 +1,4 @@
-import getOwnPropertyDescriptors from 'core-js/library/fn/object/get-own-property-descriptors'
+import getOwnPropertyDescriptors from 'object.getownpropertydescriptors'
 import cloneDeep from 'lodash.clonedeep'
 
 const applyInvariant = (name, condition, { configurable, enumerable, value }) => {
