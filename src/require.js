@@ -1,12 +1,4 @@
-const getTypeOfDescriptor = ({ value, get, set }) => {
-  if (value) {
-    return 'value'
-  } else if (get) {
-    return 'get'
-  }
-
-  return 'set'
-}
+import getTypeOfDescriptor from './getTypeOfDescriptor'
 
 const require = condition => (target, name, descriptor) => {
   const type = getTypeOfDescriptor(descriptor)
