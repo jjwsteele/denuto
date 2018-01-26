@@ -1,7 +1,16 @@
 {
-  "presets": ["env"],
+  "presets": [["env", { "modules": false }]],
   "plugins": [
     "transform-object-rest-spread",
     "transform-decorators-legacy"
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [["env"]],
+      "plugins": [
+        "transform-object-rest-spread",
+        "transform-decorators-legacy"
+      ]
+    }
+  }
 }
