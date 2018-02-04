@@ -1,5 +1,5 @@
-import getOwnPropertyDescriptors from 'object.getownpropertydescriptors'
-import cloneDeep from 'lodash.clonedeep'
+import cloneDeep from 'lodash-es/cloneDeep'
+import getOwnPropertyDescriptors from './utils/getOwnPropertyDescriptors'
 
 const applyInvariant = (name, condition, { configurable, enumerable, value }) => {
   let _value = value
@@ -11,7 +11,7 @@ const applyInvariant = (name, condition, { configurable, enumerable, value }) =>
       return _value
     },
     set(newValue) {
-      const thisToBe = cloneDeep(this)
+      const thisToBe = cloneDeep(this, true)
       thisToBe[name] = newValue
 
       if (!condition(thisToBe)) {
@@ -34,17 +34,22 @@ const applyInvariantToProperties = (condition, obj) => {
   })
 }
 
-const invariant = condition => target => 
-  class extends target {
-    constructor(...args) {
-      super(...args)
+const invariant = condition => target => {
+  if (process.env.NODE_ENV !== 'production') {
+    return class extends target {
+      constructor(...args) {
+        super(...args)
 
-      if (!condition(this)) {
-        throw new Error('Failed postcondition')
+        if (!condition(this)) {
+          throw new Error('Failed postcondition')
+        }
+
+        applyInvariantToProperties(condition, this)
       }
-
-      applyInvariantToProperties(condition, this)
     }
   }
+
+  return target
+}
 
 export default invariant

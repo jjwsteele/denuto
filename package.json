@@ -11,6 +11,9 @@
     "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
     "test": "jest"
   },
+  "jest": {
+    "transformIgnorePatterns": ["/!node_modules\\/lodash-es/"]
+  },
   "author": "Jordan Steele",
   "license": "ISC",
   "devDependencies": {
@@ -30,8 +33,6 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "dependencies": {
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.isequal": "^4.5.0",
-    "object.getownpropertydescriptors": "^2.0.3"
+    "lodash-es": "^4.17.5"
   }
 }
