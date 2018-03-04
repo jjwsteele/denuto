@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "Design by contract for JavaScript",
   "main": "lib/denuto.js",
+  "files": [
+    "dist",
+    "es",
+    "lib",
+    "src"
+  ],
   "scripts": {
     "build:commonjs": "cross-env NODE_ENV=cjs rollup -c -o lib/denuto.js",
     "build:es": "cross-env BABEL_ENV=es NODE_ENV=es rollup -c -o es/denuto.js",
