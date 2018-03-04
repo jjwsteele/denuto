@@ -14,7 +14,7 @@ const indexOfTwentyThree = findIndex(numbers, is23)
 describe('contract', () => {
   describe('with no arguments', () => {
     it('maintains behaviour of function', () => {
-      const sortWithEmptyContract = contract()(sort)
+      const sortWithEmptyContract = contract({})(sort)
       expect(sortWithEmptyContract([...numbers])).toEqual(sortedNumbers)
       expect(sort([...numbers])).toEqual(sortedNumbers)
     })
@@ -24,7 +24,7 @@ describe('contract', () => {
     let sortWithContract
 
     beforeEach(() => {
-      sortWithContract = contract(lengthLessThan10)(sort)
+      sortWithContract = contract({ pre: lengthLessThan10 })(sort)
     })
 
     it('maintains behaviour of function', () => {
@@ -43,14 +43,14 @@ describe('contract', () => {
       && result.every((element, i) => i == 0 || element >= result[i - 1])
 
     it('maintains behaviour of function', () => {
-      const sortWithContract = contract(null, sortPostCondition)(sort)
+      const sortWithContract = contract({ post: sortPostCondition })(sort)
       expect(sortWithContract([...numbers])).toEqual(sortedNumbers)
       expect(sort([...numbers])).toEqual(sortedNumbers)
     })
 
     it('throws an error when postcondition is not met', () => {
       const badSort = () => tenNumbers
-      const badSortWithContract = contract(null, sortPostCondition)(badSort)
+      const badSortWithContract = contract({ post: sortPostCondition })(badSort)
       expect(() => badSortWithContract([...numbers])).toThrow(/postcondition/)
     })
   })
@@ -59,10 +59,10 @@ describe('contract', () => {
     let findIndexWithContract
 
     beforeEach(() => {
-      findIndexWithContract = contract(
-        lengthLessThan10,
-        (result, [array, callback]) => callback(array[result])
-      )(findIndex)
+      findIndexWithContract = contract({
+        pre: lengthLessThan10,
+        post: (result, [array, callback]) => callback(array[result])
+      })(findIndex)
     })
 
     it('maintains behaviour of function', () => {
@@ -85,13 +85,12 @@ describe('contract', () => {
 
   describe('when called with a function which modifies its own arguments', () => {
     it('allows comparison of the original arguments with the arguments after execution', () => {
-      const pushWithContract = contract(
-        null,
-        (result, [array, element], [oldArray]) =>
+      const pushWithContract = contract({
+        post: (result, [array, element], [oldArray]) =>
           array.length - oldArray.length === 1
           && array[array.length - 1] === element
           && result === array.length
-      )(push)
+      })(push)
 
       expect(pushWithContract([...tenNumbers], 5)).toBe(11)
     })
@@ -101,7 +100,7 @@ describe('contract', () => {
     it('calls postcondition with undefined as first argument', () => {
       const tenNumbersReversed = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
       const mockFn = jest.fn().mockImplementation(() => true)
-      const reverseInPlaceWithContract = contract(null, mockFn)(reverseInPlace)
+      const reverseInPlaceWithContract = contract({ post: mockFn })(reverseInPlace)
       reverseInPlaceWithContract([...tenNumbers])
       expect(mockFn).toHaveBeenCalledWith(undefined, [tenNumbersReversed], [tenNumbers])
     })

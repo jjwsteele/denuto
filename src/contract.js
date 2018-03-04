@@ -10,7 +10,7 @@ const postConditionErrorMsg = (func, result, args, oldArgs) =>
     args: '${args}'
     oldArgs: '${oldArgs}'`
 
-const contract = (pre, post) => func => (...args) => {
+const contract = ({ pre, post }) => func => (...args) => {
   if (process.env.NODE_ENV !== 'production') {
     if (pre && !pre(...args)) {
       throw new Error(preConditionErrorMsg(func, args))
