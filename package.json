@@ -36,7 +36,9 @@
     "Jordan Steele <jjwsteele@gmail.com> (https://github.com/jjwsteele)"
   ],
   "jest": {
-    "transformIgnorePatterns": ["/!node_modules\\/lodash-es/"]
+    "transformIgnorePatterns": [
+      "/!node_modules\\/lodash-es/"
+    ]
   },
   "author": "Jordan Steele",
   "license": "MIT",
