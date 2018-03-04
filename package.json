@@ -9,8 +9,26 @@
     "build:umd": "cross-env BABEL_ENV=es NODE_ENV=development rollup -c -o dist/denuto.js",
     "build:umd:min": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c -o dist/denuto.min.js",
     "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "npm run build"
   },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jjwsteele/denuto.git"
+  },
+  "keywords": [
+    "design",
+    "contract",
+    "invariant",
+    "requires",
+    "ensures",
+    "ada",
+    "eiffel"
+  ],
+  "authors": [
+    "Jordan Steele <jjwsteele@gmail.com> (https://github.com/jjwsteele)"
+  ],
   "jest": {
     "transformIgnorePatterns": ["/!node_modules\\/lodash-es/"]
   },
