@@ -1,6 +1,6 @@
 {
   "name": "denuto",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Design by contract for JavaScript",
   "main": "lib/denuto.js",
   "files": [
