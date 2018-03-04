@@ -32,7 +32,7 @@ describe('invariant', () => {
 
     it('can use new properties in invariant check when triggered', () => {
       instance.violation = true
-      expect(() => instance.existing = 1).toThrow(/postcondition/)
+      expect(() => instance.existing = 1).toThrow(/invariant/)
     })
   })
 
@@ -56,7 +56,7 @@ describe('invariant', () => {
         }
       }
 
-      expect(() => new Violating()).toThrow(/postcondition/)
+      expect(() => new Violating()).toThrow(/invariant/)
     })
   })
 
@@ -77,7 +77,7 @@ describe('invariant', () => {
     })
 
     it('throws an error when a violating object is attempted to be created', () => {
-      expect(() => new ConstructorWithParameters(2, 5)).toThrow(/postcondition/)
+      expect(() => new ConstructorWithParameters(2, 5)).toThrow(/invariant/)
     })
   })
 
@@ -105,7 +105,7 @@ describe('invariant', () => {
     })
 
     it('throws an error when the property is set such that the invariant is not met', () => {
-      expect(() => instance.aProp = 0).toThrow(/postcondition/)
+      expect(() => instance.aProp = 0).toThrow(/invariant/)
     })
 
     it('does not set the property if the invariant will not be met', () => {
@@ -151,7 +151,7 @@ describe('invariant', () => {
     })
 
     it('throws an error when the setter will cause the invariant to not be met', () => {
-      expect(() => instance.fullName = 'Jane Doe').toThrow(/postcondition/)
+      expect(() => instance.fullName = 'Jane Doe').toThrow(/invariant/)
     })
 
     it('does not allow the object to not violate the invariant', () => {
@@ -211,12 +211,12 @@ describe('invariant', () => {
     })
 
     it('throws an error when a method violates the invariant', () => {
-      expect(() => instance.setTypeToInvalid()).toThrow(/postcondition/)
-      expect(() => instance.setType('invalid')).toThrow(/postcondition/)
+      expect(() => instance.setTypeToInvalid()).toThrow(/invariant/)
+      expect(() => instance.setType('invalid')).toThrow(/invariant/)
     })
 
     it('does not set anything if the invariant will not be met', () => {
-      expect(() => instance.setTypeToInvalid()).toThrow(/postcondition/)
+      expect(() => instance.setTypeToInvalid()).toThrow(/invariant/)
       expect(instance.type).toBe('valid')
     })
   })
@@ -279,21 +279,21 @@ describe('invariant', () => {
     })
 
     it('throws an error when creating with a violation on a superclass property', () => {
-      expect(() => new SubClass(true, false)).toThrow(/postcondition/)
+      expect(() => new SubClass(true, false)).toThrow(/invariant/)
     })
 
     it('throws an error when creating with a violation on a subclass property', () => {
-      expect(() => new SubClass(false, true)).toThrow(/postcondition/)
+      expect(() => new SubClass(false, true)).toThrow(/invariant/)
     })
 
     it('throws an error when setting violating superclass property on subclass instance', () => {
       const instance = new SubClass(false, false)
-      expect(() => instance.violationInSuper = true).toThrow(/postcondition/)
+      expect(() => instance.violationInSuper = true).toThrow(/invariant/)
     })
 
     it('throws an error when violating superclass method on subclass instance is called', () => {
       const instance = new SubClass(false, false)
-      expect(() => instance.violateSuper()).toThrow(/postcondition/)
+      expect(() => instance.violateSuper()).toThrow(/invariant/)
     })
   })
 
@@ -337,22 +337,22 @@ describe('invariant', () => {
     })
 
     it('throws an error when creating subclass that violates superclass invariant', () => {
-      expect(() => new SubClass(true)).toThrow(/postcondition/)
+      expect(() => new SubClass(true)).toThrow(/invariant/)
     })
 
     it('throws an error when setting violating superclass property on subclass instance', () => {
       const instance = new SubClass(false)
-      expect(() => instance.violationInSuper = true).toThrow(/postcondition/)
+      expect(() => instance.violationInSuper = true).toThrow(/invariant/)
     })
 
     it('throws an error when violating superclass method on subclass instance is called', () => {
       const instance = new SubClass(false)
-      expect(() => instance.violateSuper()).toThrow(/postcondition/)
+      expect(() => instance.violateSuper()).toThrow(/invariant/)
     })
 
     it('throws an error when violating subclass method is called', () => {
       const instance = new SubClass(false)
-      expect(() => instance.violateFromSub()).toThrow(/postcondition/)
+      expect(() => instance.violateFromSub()).toThrow(/invariant/)
     })
   })
 })

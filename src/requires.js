@@ -1,4 +1,5 @@
 import getTypeOfDescriptor from './utils/getTypeOfDescriptor'
+import { throwPreconditionError } from './utils/errors'
 
 const requires = condition => (target, name, descriptor) => {
   if (process.env.NODE_ENV !== 'production') {
@@ -8,7 +9,7 @@ const requires = condition => (target, name, descriptor) => {
       ...descriptor,
       [type]: function(...args) {
         if (!condition(this, args)) {
-          throw new Error('Failed precondition')
+          throwPreconditionError(descriptor[type], { 'this': this, args })
         }
 
         return descriptor[type].apply(this, args)

@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash-es/cloneDeep'
 import getOwnPropertyDescriptors from './utils/getOwnPropertyDescriptors'
+import { throwInvariantError } from './utils/errors'
 
 const applyInvariant = (name, condition, { configurable, enumerable, value }) => {
   let _value = value
@@ -15,7 +16,7 @@ const applyInvariant = (name, condition, { configurable, enumerable, value }) =>
       thisToBe[name] = newValue
 
       if (!condition(thisToBe)) {
-        throw new Error('Failed postcondition')
+        throwInvariantError(thisToBe)
       }
 
       _value = newValue
@@ -41,7 +42,7 @@ const invariant = condition => target => {
         super(...args)
 
         if (!condition(this)) {
-          throw new Error('Failed postcondition')
+          throwInvariantError(this)
         }
 
         applyInvariantToProperties(condition, this)

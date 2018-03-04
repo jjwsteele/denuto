@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash-es/cloneDeep'
 import getTypeOfDescriptor from './utils/getTypeOfDescriptor'
+import { throwPostconditionError } from './utils/errors'
 
 const ensure = condition => (target, name, descriptor) => {
   if (process.env.NODE_ENV !== 'production') {
@@ -13,7 +14,7 @@ const ensure = condition => (target, name, descriptor) => {
         const result = descriptor[type].apply(this, args)
 
         if (!condition(this, old, result, args, oldArgs)) {
-          throw new Error('Failed postcondition')
+          throwPostconditionError(descriptor[type], { 'this': this, old, result, args, oldArgs })
         }
 
         return result
