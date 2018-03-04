@@ -1,11 +1,11 @@
 import contract from './contract'
 import invariant from './invariant'
-import require from './require'
-import ensure from './ensure'
+import requires from './requires'
+import ensures from './ensures'
 
 export {
   contract,
   invariant,
-  require,
-  ensure,
+  requires,
+  ensures,
 }

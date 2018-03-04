@@ -4,8 +4,8 @@ Denuto enables design by contract programming in JavaScript. It provides four di
 
 * `contract` - a higher order function,
 * `invariant` - a class decorator,
-* `require` - a property decorator,
-* `ensure` - a property decorator
+* `requires` - a property decorator,
+* `ensures` - a property decorator
 
 Denuto throws run-time errors when contracts are violated in development. Design by contract can provide a number of advantages:
 
@@ -27,7 +27,7 @@ npm install --save denuto
 
 Using:
 ```javascript
-import { contract, invariant, require, ensure } from 'denuto'
+import { contract, invariant, requires, ensures } from 'denuto'
 
 const fn = () => {}
 const contractedFn = contract({ pre: () => true, post: () => true })(fn)
@@ -39,23 +39,23 @@ class Car {
     this.speed = 0
   }
 
-  @require(self => !self.on)
+  @requires(self => !self.on)
   turnOn() {
     this.on = true
   }
 
-  @require(self => self.on)
-  @ensure((self, old) => self.speed > old.speed)
+  @requires(self => self.on)
+  @ensures((self, old) => self.speed > old.speed)
   accelerate() {
     this.speed += 5
   }
 
-  @ensure((self, old) => self.speed < old.speed)
+  @ensures((self, old) => self.speed < old.speed)
   break() {
     this.speed -= 0
   }
 
-  @require(self => self.on && self.speed === 0)
+  @requires(self => self.on && self.speed === 0)
   turnOff() {
     this.on = false
   }
@@ -78,13 +78,13 @@ A class decorator for specifying conditions that must remain true at all times.
 
 * `condition(self)` *(function)*: Will be called with a copy of the object before and after every property of the class is accessed. If `condition` returns false, then a invariant error will be thrown. *Note: invariant checking is applied for all properties declared on the class or initialised in the constructor, and not for properties added later.*
 
-#### @require(condition)
+#### @requires(condition)
 
 A property decorator for specifying preconditions on access to a property. Can be applied to value, method, getter or setter properties.
 
 * `condition(self, args)` *(function)*: Will be called with a copy of the object and arguments before the property is accessed. If `condition` returns false, then a precondition error will be thrown.
 
-#### @ensure(condition)
+#### @ensures(condition)
 
 A property decorator for specifying postconditions on access to a property. Can be applied to value, method, getter or setter properties.
 

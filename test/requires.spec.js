@@ -1,6 +1,6 @@
-import { require } from '../src'
+import { requires } from '../src'
 
-describe('require', () => {
+describe('requires', () => {
   describe('with a basic method on a class', () => {
     let instance
 
@@ -9,7 +9,7 @@ describe('require', () => {
         this.canRunMethod = true
       }
 
-      @require(curr => curr.canRunMethod)
+      @requires(curr => curr.canRunMethod)
       aMethod() {
       }
     }
@@ -36,7 +36,7 @@ describe('require', () => {
         this.getMe = 10
       }
 
-      @require(curr => curr.getMe < 11)
+      @requires(curr => curr.getMe < 11)
       get meDoubled() {
         return this.getMe * 2
       }
@@ -64,7 +64,7 @@ describe('require', () => {
         this.it = 29
       }
 
-      @require((curr, [newValue]) => curr.it < 30 && newValue < 10)
+      @requires((curr, [newValue]) => curr.it < 30 && newValue < 10)
       set itDoubled(newValue) {
         this.it = newValue * 2
       }
@@ -97,7 +97,7 @@ describe('require', () => {
         this.summed = 0
       }
 
-      @require((curr, [a, b, c, d, e]) => curr.summed < a && a < e)
+      @requires((curr, [a, b, c, d, e]) => curr.summed < a && a < e)
       sum(a, b, c, d, e) {
         this.summed = a + b + c + d + e
       }
@@ -124,7 +124,7 @@ describe('require', () => {
   describe('on a method that returns a value', () => {
     it('maintains the behaviour of the method', () => {
       class OnAMethodThatReturnsAValue {
-        @require(() => true)
+        @requires(() => true)
         returnTen() {
           return 10
         }
@@ -143,9 +143,9 @@ describe('require', () => {
         this.summed = 0
       }
 
-      @require(curr => curr.summed < 5)
-      @require((curr, [arg]) => arg < 10)
-      @require((curr, [arg]) => curr.summed < arg)
+      @requires(curr => curr.summed < 5)
+      @requires((curr, [arg]) => arg < 10)
+      @requires((curr, [arg]) => curr.summed < arg)
       chained(arg) {
         this.summed = arg
       }
@@ -160,12 +160,12 @@ describe('require', () => {
       expect(instance.summed).toBe(9)
     })
 
-    it('throws an error when the first require is violated', () => {
+    it('throws an error when the first requires is violated', () => {
       instance.summed = 5
       expect(() => instance.chained(9)).toThrow(/precondition/)
     })
 
-    it('throws an error when the last require is violated', () => {
+    it('throws an error when the last requires is violated', () => {
       expect(() => instance.chained(0)).toThrow(/precondition/)
     })
   })

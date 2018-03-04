@@ -1,6 +1,6 @@
-import { ensure } from '../src'
+import { ensures } from '../src'
 
-describe('ensure', () => {
+describe('ensures', () => {
   describe('with a basic method on a class', () => {
     let instance
 
@@ -9,7 +9,7 @@ describe('ensure', () => {
         this.array = []
       }
 
-      @ensure((curr, old) => curr.array.length < 3 && curr.array.length === old.array.length + 1)
+      @ensures((curr, old) => curr.array.length < 3 && curr.array.length === old.array.length + 1)
       push(...args) {
         this.array.push(...args)
       }
@@ -43,7 +43,7 @@ describe('ensure', () => {
         this.getMe = 10
       }
 
-      @ensure(curr => curr.getMe < 21)
+      @ensures(curr => curr.getMe < 21)
       get meDoubled() {
         this.getMe *= 2
         return this.getMe
@@ -73,7 +73,7 @@ describe('ensure', () => {
         this.it = 0
       }
 
-      @ensure((curr, old, result, [newValue], [oldNewValue]) => curr.it === 10
+      @ensures((curr, old, result, [newValue], [oldNewValue]) => curr.it === 10
         && old.it === 0
         && result === undefined
         && newValue === 5
@@ -103,7 +103,7 @@ describe('ensure', () => {
     let instance
 
     class OnAMethodWithArguments {
-      @ensure((_, __, ___, [numbers], [oldNumbers]) => numbers[0] === oldNumbers[0])
+      @ensures((_, __, ___, [numbers], [oldNumbers]) => numbers[0] === oldNumbers[0])
       squareNumbers(numbers) {
         for (let i = 0; i < numbers.length; i++) {
           numbers[i] *= numbers[i]
@@ -130,7 +130,7 @@ describe('ensure', () => {
     let instance
 
     class OnAMethodThatReturnsAValue {
-      @ensure((_, __, result) => result < 28)
+      @ensures((_, __, result) => result < 28)
       cube(value) {
         return value * value * value
       }
@@ -157,9 +157,9 @@ describe('ensure', () => {
         this.value = 0
       }
 
-      @ensure(curr => curr.value > 5)
-      @ensure(curr => curr.value < 100)
-      @ensure(curr => curr.value < 10)
+      @ensures(curr => curr.value > 5)
+      @ensures(curr => curr.value < 100)
+      @ensures(curr => curr.value < 10)
       setValue(value) {
         this.value = value
       }
@@ -174,11 +174,11 @@ describe('ensure', () => {
       expect(instance.value).toBe(9)
     })
 
-    it('throws an error when the first ensure is violated', () => {
+    it('throws an error when the first ensures is violated', () => {
       expect(() => instance.setValue(5)).toThrow(/postcondition/)
     })
 
-    it('throws an error when the last ensure is violated', () => {
+    it('throws an error when the last ensures is violated', () => {
       expect(() => instance.setValue(10)).toThrow(/postcondition/)
     })
   })
