@@ -1,6 +1,6 @@
 # Denuto
 
-Denuto enables design by contract programming in JavaScript. It provides four different ways to specify contracts:
+Denuto enables design by contract (DbC) programming in JavaScript. It provides four different ways to specify contracts:
 
 * `contract` - a higher order function,
 * `invariant` - a class decorator,
@@ -17,6 +17,13 @@ Denuto throws run-time errors when contracts are violated in development. Design
 However, it is not the solution for everything. It is not a replacement for testing, contracts can only specify general rules, not specific cases. It also tends to work best when dealing with domain logic. For example, it is more effective for specifying invariants in state, than the contract for a rendering function.
 
 NOTE: *Similary to [core-decorators][core-decorators], this library makes use of stage-0 decorators. The spec has changed since moving to stage-2, and transpilers are yet to implement the changes. The implementation of this library will likely have to change, but hopefully not the interface. Regardless, this project will not go to 1.0 until then. I recommend locking your dependency to PATCH.*
+
+## DbC Resources
+
+* [Wikibooks][wikibooks],
+* [Eiffel introduction][eiffel-introduction],
+* [gcontracts for Groovy introduction][gcontracts-introduction],
+* [C2 Wiki][c2-wiki-introduction]
 
 ## Getting Started
 
@@ -111,3 +118,7 @@ MIT
 [DefinePlugin]: https://webpack.js.org/plugins/define-plugin/
 [rollupreplace]: https://github.com/rollup/rollup-plugin-replace
 [core-decorators]: https://github.com/jayphelps/core-decorators
+[wikibooks]: https://en.wikibooks.org/wiki/Computer_Programming/Design_by_Contract
+[eiffel-introduction]: https://www.eiffel.com/values/design-by-contract/introduction/
+[gcontracts-introduction]: https://github.com/andresteingress/gcontracts/wiki/An-Introduction-to-Programming-by-Contract
+[c2-wiki-introduction]: http://wiki.c2.com/?DesignByContract
