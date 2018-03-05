@@ -29,8 +29,11 @@ Using:
 ```javascript
 import { contract, invariant, requires, ensures } from 'denuto'
 
-const fn = () => {}
-const contractedFn = contract({ pre: () => true, post: () => true })(fn)
+const findIndex = (array, toFind) => array.findIndex(item => item === toFind)
+const contractedFindIndex = contract({
+  pre: array => array.length < 100,
+  post: (result, [array, toFind]) => array[result] === toFind
+})(findIndex)
 
 @invariant(self => self.on || !self.on && self.speed === 0)
 class Car {
